@@ -24,25 +24,29 @@
   "homepage": "https://github.com/andyjk15/crypto-site#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "chalk": "^2.4.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
-    "ejs": "^2.5.9",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "morgan": "^1.9.0",
-    "nodemon": "^1.17.3"
+    "express": "latest",
+    "express-session": "latest",
+    "morgan": "latest",
+    "nodemon": "latest",
+    "pug": "latest"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "chalk": "^2.4.1",
-    "eslint": "^4.19.1",
-    "grunt": "^1.0.2",
+    "eslint": "latest",
+    "grunt": "latest",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-pug": "^1.0.0",
     "grunt-contrib-uglify": "^3.3.0",
+    "grunt-jsbeautifier": "^0.2.13",
+    "grunt-lineending": "^1.0.0",
+    "grunt-trimtrailingspaces": "^3.0.0",
     "gruntify-eslint": "^4.0.0",
-    "jasmine": "^3.1.0",
-    "js-beautify": "^1.7.5"
+    "jasmine": "latest"
   }
 }

@@ -32,8 +32,9 @@ bower_components
 # Node stuff
 package-lock.json
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+# Built code
+build/
+src
 
 # Dependency directories
 node_modules/
@@ -47,6 +48,7 @@ typings/
 
 # Optional eslint cache
 .eslintcache
+.eslintignore
 
 # Optional REPL history
 .node_repl_history
