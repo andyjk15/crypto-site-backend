@@ -62,3 +62,11 @@ typings/
 
 # .git folder
 .git
+
+# Tests
+spec/
+
+#eslint
+.eslintrc.json
+
+TODO
