@@ -21,6 +21,7 @@ app.use(session({
 app.set('view engine', 'ejs');
 require('./app/routes/default.js')(app);
 
+
 //Port
 app.listen(port);
 console.log('Listening on port: ' + port);
