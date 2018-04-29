@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        //Tasks
         uglify: {
             build: {
                 files: [{
@@ -21,7 +22,7 @@ module.exports = function(grunt) {
             files: ["app/**/*.js" , "server.js" , "app/**/*.css" , "build/**/*.html"],
             options: {
                 js: {
-                    indentSize: 2,
+                    indentSize: 4,
                     indent_char: " ",
                     indent_level: 0,
                     indent_with_tabs: false,
@@ -103,6 +104,7 @@ module.exports = function(grunt) {
 
       });
 
+    //Load Tasks
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-lineending');
