@@ -3,9 +3,9 @@ var app = express();
 var port = process.env.PORT || 8080;
 
 var chalk = require('chalk');
-var error = chalk.bold.red;
+//var error = chalk.bold.red;
 var warn = chalk.bold.yellow;
-var info = chalk.bold.green;
+//var info = chalk.bold.green;
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
