@@ -29,4 +29,4 @@ require('./app/routes/default.js')(app);
 
 //Port
 app.listen(port);
-console.log(info('Listening on port: ' + port));
+console.log(warn('Listening on port: ' + port));
