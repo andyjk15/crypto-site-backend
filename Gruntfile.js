@@ -103,6 +103,7 @@ module.exports = function(grunt) {
 
       });
 
+    //Load Tasks
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-lineending');
