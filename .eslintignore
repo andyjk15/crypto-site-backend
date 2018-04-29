@@ -1,0 +1,27 @@
+# Tests
+spec/*
+
+# Node Modules
+node_modules/*
+
+# Build files
+build/*
+
+# git
+.git/*
+.gitignore
+
+# eslint
+.eslintignore
+.eslintrc.json
+
+# Grunt
+Gruntfile.js
+
+# Temp files
+TODO
+**/*.md
+package.json
+package-lock.json
+LICENSE
+test.sh

@@ -48,7 +48,6 @@ typings/
 
 # Optional eslint cache
 .eslintcache
-.eslintignore
 
 # Optional REPL history
 .node_repl_history
@@ -67,8 +66,5 @@ typings/
 
 # Tests
 spec/
-
-#eslint
-.eslintrc.json
 
 TODO
