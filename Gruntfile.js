@@ -17,7 +17,7 @@ module.exports = function(grunt) {
                     }]
                 }
             },
-        beautify: {
+        jsbeautifier: {
             files: ["app/**/*.js" , "server.js" , "app/**/*.css" , "build/**/*.html"],
             options: {
                 js: {
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         },
         trimtrailingspaces: {
             main: {
-                src : ['<%= beautify.files %>'],
+                src : ['<%= jsbeautifier.files %>'],
                 options: {
                     filter: 'isFile',
                     encoding: 'utf8',
@@ -73,10 +73,33 @@ module.exports = function(grunt) {
                     overwrite: true
                 },
                 files: {
-                    '': ['<%= beautify.files %>']
+                    '': ['<%= jsbeautifier.files %>']
                 }
             }
         },
+        cssmin: {
+            target: {
+                files: [{
+                    expand  : true,
+                    cwd     : 'app/views/css',
+                    src     : [ '*.css', '!*.min.css'],
+                    dest    : 'build/views/css/',
+                    ext     : '.css'
+                }]
+            }
+        },
+        //eslint: {
+        //    options: {
+        //        configFile: "./.eslintrc.json",
+                //rulePaths: ['./.eslintignore']
+        //    },
+        //    src: [ '**/*.js' ]
+        //},
+        pug: {
+
+        },
+
+        clean: [ './src' ]
 
       });
 
@@ -87,7 +110,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-pug");
-    grunt.loadNpmTasks("gruntify-eslint");
 
-    grunt.registerTask('default', [ 'uglify' , 'beautify', 'lint' , 'clean']);
+    grunt.registerTask('default', [ 'jsbeautifier', 'trimtrailingspaces' , 'lineending' ]);
+    grunt.registerTask('build' , [ 'uglify' , 'cssmin' , 'pug' , 'clean']);
 };
