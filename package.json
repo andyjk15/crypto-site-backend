@@ -46,7 +46,6 @@
     "grunt-jsbeautifier": "^0.2.13",
     "grunt-lineending": "^1.0.0",
     "grunt-trimtrailingspaces": "^3.0.0",
-    "gruntify-eslint": "^4.0.0",
     "jasmine": "latest"
   }
 }

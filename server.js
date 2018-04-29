@@ -9,11 +9,14 @@ var bodyParser = require('body-parser');
 
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({secret: 'anystringoftext',
-                saveUninitialized: true,
-                resave: true
-                }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(session({
+  secret: 'anystringoftext',
+  saveUninitialized: true,
+  resave: true
+}));
 
 app.set('view engine', 'ejs');
 require('./app/routes/default.js')(app);
