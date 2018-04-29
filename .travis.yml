@@ -28,6 +28,7 @@ matrix:
                     # Update apt
                     - echo "Updating packages"
                     - "apt update"
+                    #- "npm install"
                     # Skip updating shrinkwrap / lock
                     - "npm config set shrinkwrap true"
                     # Remove all non-test dependencies
@@ -35,4 +36,7 @@ matrix:
                     # Update Node.js modules
                     - "test ! -d node_modules || npm prune"
                     - "test ! -d node_modules || npm rebuild"
+install:
+      - npm install
 script:
+    - npm test
