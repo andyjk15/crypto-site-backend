@@ -9,15 +9,18 @@ node_js:
   - "6.12"
   - "7.10"
   - "8.9"
+  - "8.11"
 matrix:
   include:
-    - node_js: "8"
-      env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
     - node_js: "9"
       env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
   allow_failures:
     # Allow the nightly installs to fail
     - env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
+    - node_js: "0.12"
+    - node_js: "1.8"
+    - node_js: "2.5"
+    - node_js: "3.3"
 sudo: false
 cache:
   directories:
