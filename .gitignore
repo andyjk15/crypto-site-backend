@@ -64,7 +64,4 @@ typings/
 # .git folder
 .git
 
-# Tests
-spec/
-
 TODO

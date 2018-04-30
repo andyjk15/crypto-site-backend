@@ -46,6 +46,7 @@
     "grunt-jsbeautifier": "^0.2.13",
     "grunt-lineending": "^1.0.0",
     "grunt-trimtrailingspaces": "^3.0.0",
-    "jasmine": "latest"
+    "jasmine": "^3.1.0",
+    "request": "^2.85.0"
   }
 }

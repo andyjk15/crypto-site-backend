@@ -28,5 +28,11 @@ require('./app/routes/default.js')(app);
 
 
 //Port
-app.listen(port);
+var server = app.listen(port);
 console.log(warn('Listening on port: ' + port));
+
+// Exports
+module.exports.server = server;
+module.exports.closeServer = function(){
+      server.close();
+};
