@@ -4,7 +4,8 @@
   "description": "Cryptocurrency Tracking Site",
   "main": "server.js",
   "scripts": {
-    "test": "eslint * && grunt"
+    "format": "grunt",
+    "test": "jasmine && eslint *"
   },
   "repository": {
     "type": "git",
