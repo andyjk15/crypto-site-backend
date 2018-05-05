@@ -9,6 +9,7 @@ var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
+//Morgan custom formatting
 app.use(morgan(function(tokens, req, res) {
 	var status = tokens.status(req, res);
 	var statusColor = status >= 500 ?
@@ -24,13 +25,11 @@ app.use(morgan(function(tokens, req, res) {
         ' ' + colours.chalk.reset('-') +
         ' ' + colours.irrel(tokens['remote-addr'](req, res));
 }));
-
 function padLeft(str, len) {
 	return len > str.length ?
 		(new Array(len - str.length + 1)).join(' ') + str :
 		str;
 }
-
 function padRight(str, len) {
 	return len > str.length ?
 		str + (new Array(len - str.length + 1)).join(' ') :
