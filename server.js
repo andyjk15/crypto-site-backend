@@ -1,38 +1,19 @@
-var express = require('express');
-var app = express();
+var http = require('http');
+var app = require('./app/app.js');
+
+//Chalk colour schemes
+var colours = require('./helpers/chalk.js');
+
+//Port selection
 var port = process.env.PORT || 8080;
 
-var chalk = require('chalk');
-//var error = chalk.bold.red;
-var warn = chalk.bold.yellow;
-//var info = chalk.bold.green;
+//Server creation
+var server = http.createServer(app);
+server.listen(port);
+console.log(colours.warn('Listening on port: ' + port));
 
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
-
-app.use(morgan('dev'));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(session({
-    secret: 'anystringoftext',
-    saveUninitialized: true,
-    resave: true
-}));
-
-app.set('view engine', 'ejs');
-require('./app/routes/default.js')(app);
-
-
-//Port
-var server = app.listen(port);
-console.log(warn('Listening on port: ' + port));
-
-// Exports
+//Exports
 module.exports.server = server;
-module.exports.closeServer = function(){
-      server.close();
+module.exports.closeServer = function() {
+	server.close();
 };

@@ -29,9 +29,12 @@
     "cookie-parser": "^1.4.3",
     "express": "latest",
     "express-session": "latest",
+    "less": "^3.0.2",
     "morgan": "latest",
-    "nodemon": "latest",
-    "pug": "latest"
+    "nano": "^6.4.3",
+    "pug": "latest",
+    "serve-favicon": "^2.5.0",
+    "winston": "^2.4.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -47,6 +50,7 @@
     "grunt-lineending": "^1.0.0",
     "grunt-trimtrailingspaces": "^3.0.0",
     "jasmine": "^3.1.0",
+    "nodemon": "^1.17.3",
     "request": "^2.85.0"
   }
 }
