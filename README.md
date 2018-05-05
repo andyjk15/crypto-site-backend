@@ -83,17 +83,37 @@ To deploy this app, I suggest using PM2.
 npm install -g pm2
 
 pm2 start server.js
-
-pm2 list        //To show currently running processes
-pm2 monit       //To show currently running processes and monit log output (very useful)
+```
+To show currently running processes
+```
+pm2 list
+```
+To show currently running processes and monit log output (very useful)
+```
+pm2 monit
 ```
 
-## Built With
+### Built With
 
+* [Express](https://expressjs.com/) -- Framework
+* [Nano](https://github.com/apache/couchdb-nano) -- CouchDB
+* [Pug](https://pugjs.org/api/getting-started.html/) -- JS HTML templater
+* [Less](http://lesscss.org/) -- CSS templater
+
+### Testing With
+
+* [Jasmine](https://jasmine.github.io/) -- Unit testing
+* [Eslint](https://eslint.org/) -- JS format and syntax testing
+* [Grunt](https://gruntjs.com/) -- Task runner, used for uglify, js-beautifier, line endings, trailing spaces, cssmin and pugjs compilation
+
+### Logging With
+
+* [Morgan](https://github.com/expressjs/morgan) -- HTTP response logging
+* [Winston](https://github.com/winstonjs/winston) -- All logging 
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [...](...). 
 
 ## Authors
 
