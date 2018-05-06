@@ -25,11 +25,13 @@ app.use(morgan(function(tokens, req, res) {
         ' ' + colours.chalk.reset('-') +
         ' ' + colours.irrel(tokens['remote-addr'](req, res));
 }));
+
 function padLeft(str, len) {
 	return len > str.length ?
 		(new Array(len - str.length + 1)).join(' ') + str :
 		str;
 }
+
 function padRight(str, len) {
 	return len > str.length ?
 		str + (new Array(len - str.length + 1)).join(' ') :
