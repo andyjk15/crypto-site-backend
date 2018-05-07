@@ -61,6 +61,10 @@ a:hover small {
   background: linear-gradient(-180deg, #25e1e8 0%, #2fefd2 100%) 0% 0% / cover; 
 }
 
+#container {
+    background: linear-gradient(-180deg, #25e1e8 0%, #2fefd2 100%) 0% 0% /cover;
+}
+
 blockquote {
   border-left: 1px solid #e5e5e5;
   margin: 0;
