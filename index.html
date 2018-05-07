@@ -1,0 +1,310 @@
+<html lang="en-US">
+<head>
+<title>Crypto-site | crypto-site</title>
+</head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="https://andyjk15.github.io/crypto-site/">crypto-site</a></h1>
+        
+        
+
+        <p>Cryptocurrency tracking site</p>
+
+        
+        <p class="view"><a href="https://github.com/andyjk15/crypto-site">View the Project on GitHub <small>andyjk15/crypto-site</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h1 id="crypto-site">Crypto-site</h1>
+<p><a href="https://travis-ci.org/andyjk15/crypto-site"><img src="https://travis-ci.org/andyjk15/crypto-site.svg?branch=master" alt="Build Status"></a></p>
+
+<p>Cryptocurrency tracking site - The goal of this project is to create a personal website that displays data on the cryptocurrencies I have holdings in.
+This is displayed on various pages for each currency, the root dir will display graphs for all currencies.</p>
+
+<p>Currencies supported:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>XMR (Monero) 
+XRP (Ripple)
+EOS (EOS)
+BTC (Bitcoin)
+BCH (Bitcoin Cash)
+LTC (Litecoin)
+ETN (Electroneum)
+ETH (Ethereum)
+SC (Siacoin)
+UBQ (Ubiq)
+</code></pre></div></div>
+
+<h2 id="getting-started">Getting Started</h2>
+<p>These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.</p>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Nodejs &gt;= 4.8
+For testing: 
+Jasmine -- npm install -g jasmine
+Grunt   -- npm install -g grunt-cli
+Eslint  -- npm install -g eslint
+</code></pre></div></div>
+
+<h3 id="installing">Installing</h3>
+
+<p>Very simple..</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+</code></pre></div></div>
+<p>Make sure you are running Node 4.8 or higher</p>
+
+<p>Download the repo:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/andyjk15/crypto-site.git
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd crypto-site
+</code></pre></div></div>
+<p>This will install of the packages needed</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
+</code></pre></div></div>
+<p>To run the app</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm start
+</code></pre></div></div>
+
+<h2 id="running-the-tests">Running the tests</h2>
+
+<p>The test are written for Jasmine, prior to running the test install Jasmine globally on your system.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g jasmine
+</code></pre></div></div>
+<p>All the test are located under the spec/ folder.
+To run the tests simply run</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jasmine *
+</code></pre></div></div>
+
+<h2 id="deployment">Deployment</h2>
+
+<p>For dev purposes I suggest installing Nodemon to run the app as this will restart itself automatically when there is a change.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g nodemon
+</code></pre></div></div>
+<p>To start:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nodemon server.js
+</code></pre></div></div>
+
+<p>To deploy this app, I suggest using PM2.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g pm2
+
+pm2 start server.js
+</code></pre></div></div>
+<p>To show currently running processes</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pm2 list
+</code></pre></div></div>
+<p>To show currently running processes and monit log output (very useful)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pm2 monit
+</code></pre></div></div>
+
+<h3 id="built-with">Built With</h3>
+
+<ul>
+  <li><a href="https://expressjs.com/">Express</a> – Framework</li>
+  <li><a href="https://github.com/apache/couchdb-nano">Nano</a> – CouchDB</li>
+  <li><a href="https://pugjs.org/api/getting-started.html/">Pug</a> – JS HTML templater</li>
+  <li><a href="http://lesscss.org/">Less</a> – CSS templater</li>
+</ul>
+
+<h3 id="testing-with">Testing With</h3>
+
+<ul>
+  <li><a href="https://jasmine.github.io/">Jasmine</a> – Unit testing</li>
+  <li><a href="https://eslint.org/">Eslint</a> – JS format and syntax testing</li>
+  <li><a href="https://gruntjs.com/">Grunt</a> – Task runner, used for uglify, js-beautifier, line endings, trailing spaces, cssmin and pugjs compilation</li>
+</ul>
+
+<h3 id="logging-with">Logging With</h3>
+
+<ul>
+  <li><a href="https://github.com/expressjs/morgan">Morgan</a> – HTTP response logging</li>
+  <li><a href="https://github.com/winstonjs/winston">Winston</a> – All logging</li>
+</ul>
+
+<h2 id="versioning">Versioning</h2>
+
+<p>We use <a href="http://semver.org/">SemVer</a> for versioning. For the versions available, see the <a href="...">…</a>.</p>
+
+<h2 id="authors">Authors</h2>
+
+<ul>
+  <li><strong>Andrew Sotheran</strong> - <em>Initial work</em> - <a href="https://github.com/andyjk15">andyjk15</a></li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/andyjk15">andyjk15</a></p>
+        
+        <p><small>Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/crypto-site/assets/js/scale.fix.js"></script>
+    
+  
+
+</body></html>
+<head>
+<body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="https://andyjk15.github.io/crypto-site/">crypto-site</a></h1>
+        
+        
+
+        <p>Cryptocurrency tracking site</p>
+
+        
+        <p class="view"><a href="https://github.com/andyjk15/crypto-site">View the Project on GitHub <small>andyjk15/crypto-site</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h1 id="crypto-site">Crypto-site</h1>
+<p><a href="https://travis-ci.org/andyjk15/crypto-site"><img src="https://travis-ci.org/andyjk15/crypto-site.svg?branch=master" alt="Build Status"></a></p>
+
+<p>Cryptocurrency tracking site - The goal of this project is to create a personal website that displays data on the cryptocurrencies I have holdings in.
+This is displayed on various pages for each currency, the root dir will display graphs for all currencies.</p>
+
+<p>Currencies supported:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>XMR (Monero) 
+XRP (Ripple)
+EOS (EOS)
+BTC (Bitcoin)
+BCH (Bitcoin Cash)
+LTC (Litecoin)
+ETN (Electroneum)
+ETH (Ethereum)
+SC (Siacoin)
+UBQ (Ubiq)
+</code></pre></div></div>
+
+<h2 id="getting-started">Getting Started</h2>
+<p>These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.</p>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Nodejs &gt;= 4.8
+For testing: 
+Jasmine -- npm install -g jasmine
+Grunt   -- npm install -g grunt-cli
+Eslint  -- npm install -g eslint
+</code></pre></div></div>
+
+<h3 id="installing">Installing</h3>
+
+<p>Very simple..</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+</code></pre></div></div>
+<p>Make sure you are running Node 4.8 or higher</p>
+
+<p>Download the repo:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/andyjk15/crypto-site.git
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd crypto-site
+</code></pre></div></div>
+<p>This will install of the packages needed</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
+</code></pre></div></div>
+<p>To run the app</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm start
+</code></pre></div></div>
+
+<h2 id="running-the-tests">Running the tests</h2>
+
+<p>The test are written for Jasmine, prior to running the test install Jasmine globally on your system.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g jasmine
+</code></pre></div></div>
+<p>All the test are located under the spec/ folder.
+To run the tests simply run</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jasmine *
+</code></pre></div></div>
+
+<h2 id="deployment">Deployment</h2>
+
+<p>For dev purposes I suggest installing Nodemon to run the app as this will restart itself automatically when there is a change.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g nodemon
+</code></pre></div></div>
+<p>To start:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nodemon server.js
+</code></pre></div></div>
+
+<p>To deploy this app, I suggest using PM2.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g pm2
+
+pm2 start server.js
+</code></pre></div></div>
+<p>To show currently running processes</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pm2 list
+</code></pre></div></div>
+<p>To show currently running processes and monit log output (very useful)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pm2 monit
+</code></pre></div></div>
+
+<h3 id="built-with">Built With</h3>
+
+<ul>
+  <li><a href="https://expressjs.com/">Express</a> – Framework</li>
+  <li><a href="https://github.com/apache/couchdb-nano">Nano</a> – CouchDB</li>
+  <li><a href="https://pugjs.org/api/getting-started.html/">Pug</a> – JS HTML templater</li>
+  <li><a href="http://lesscss.org/">Less</a> – CSS templater</li>
+</ul>
+
+<h3 id="testing-with">Testing With</h3>
+
+<ul>
+  <li><a href="https://jasmine.github.io/">Jasmine</a> – Unit testing</li>
+  <li><a href="https://eslint.org/">Eslint</a> – JS format and syntax testing</li>
+  <li><a href="https://gruntjs.com/">Grunt</a> – Task runner, used for uglify, js-beautifier, line endings, trailing spaces, cssmin and pugjs compilation</li>
+</ul>
+
+<h3 id="logging-with">Logging With</h3>
+
+<ul>
+  <li><a href="https://github.com/expressjs/morgan">Morgan</a> – HTTP response logging</li>
+  <li><a href="https://github.com/winstonjs/winston">Winston</a> – All logging</li>
+</ul>
+
+<h2 id="versioning">Versioning</h2>
+
+<p>We use <a href="http://semver.org/">SemVer</a> for versioning. For the versions available, see the <a href="...">…</a>.</p>
+
+<h2 id="authors">Authors</h2>
+
+<ul>
+  <li><strong>Andrew Sotheran</strong> - <em>Initial work</em> - <a href="https://github.com/andyjk15">andyjk15</a></li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/andyjk15">andyjk15</a></p>
+        
+        <p><small>Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/crypto-site/assets/js/scale.fix.js"></script>
+    
+  
+
+</body>
+</html>
