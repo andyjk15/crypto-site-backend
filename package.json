@@ -25,6 +25,7 @@
   "homepage": "https://github.com/andyjk15/crypto-site#readme",
   "dependencies": {
     "@sendgrid/mail": "^6.2.1",
+    "async": "^2.6.0",
     "bcrypt": "^2.0.1",
     "body-parser": "latest",
     "chalk": "^2.4.1",
@@ -43,6 +44,7 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pug": "latest",
+    "request": "^2.85.0",
     "serve-favicon": "^2.5.0",
     "winston": "^2.4.2"
   },
@@ -60,7 +62,6 @@
     "grunt-lineending": "^1.0.0",
     "grunt-trimtrailingspaces": "^3.0.0",
     "jasmine": "^3.1.0",
-    "nodemon": "^1.17.3",
-    "request": "^2.85.0"
+    "nodemon": "^1.17.3"
   }
 }
