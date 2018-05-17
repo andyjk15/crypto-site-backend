@@ -7,8 +7,8 @@ This is displayed on various pages for each currency, the root dir will display 
 Currencies supported:
 ```
 XMR (Monero) 
-XRP (Ripple)
-EOS (EOS)
+DASH (Dash)
+DCR (Decred)
 BTC (Bitcoin)
 BCH (Bitcoin Cash)
 LTC (Litecoin)
