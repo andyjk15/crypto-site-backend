@@ -16,6 +16,7 @@ ETN (Electroneum)
 ETH (Ethereum)
 SC (Siacoin)
 UBQ (Ubiq)
+ZEC (Zcash)
 ```
 
 ## Getting Started
