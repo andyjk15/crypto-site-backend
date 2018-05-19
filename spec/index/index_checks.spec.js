@@ -23,7 +23,7 @@ describe("Test Server Start", () => {
             expect(data.status).toBe(200);
         });
         it("Body", () => {
-            expect(data.body).toBe("Hello world");
+            expect(data.body).toBe("Hello World");
         });
     });
     //describe("GET /test", () => {

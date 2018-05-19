@@ -1,7 +1,8 @@
 var express = require('express');
 var favicon = require('serve-favicon');
 var app = express();
-
+var appRoot = require('app-root-path');
+var winston = require(appRoot + '/helpers/winston.js');
 var colours = require('../helpers/chalk.js');
 
 var cookieParser = require('cookie-parser');
@@ -9,17 +10,50 @@ var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
+
 //Spawn collector child process
 var spawn = require('child_process').spawn;
-var datacollect = spawn('node', ['app/cl.js'], {
+
+var datacollect = spawn('node', ['app/controllers/collector.js'], {
 	detached: true
 });
 datacollect.stdout.on('data', function(data) {
-	console.log(data.toString());
-	console.log('PID' + datacollect.pid);
+	var log = data.toString();
+	var sliced = log.slice(0, 3);
+	if (log.includes('*Error*')) {
+		console.log(colours.childname('Collector Output : ') +
+            colours.error(log) +
+            colours.childPID(' -- PID : ' + datacollect.pid)
+		);
+	} else if (log.includes('*Warning*')) {
+		console.log(colours.childname('Collector Output : ') +
+            colours.warn(log) +
+            colours.childPID(' -- PID : ' + datacollect.pid)
+		);
+	} else {
+		console.log(colours.childname('Collector Output : ') +
+            colours.info(log) +
+            colours.childPID(' -- PID : ' + datacollect.pid)
+		);
+	}
+});
+datacollect.stderr.on('data', function(data) {
+	console.log(colours.error('===') +
+        colours.error('    Collector Output    ') +
+        colours.error('===')
+	);
+	console.log(colours.error('Child Error : ' + data));
+	console.log(colours.error('===       ') +
+        colours.childPID('PID : ' + datacollect.pid) +
+        colours.error('       ===')
+	);
 });
 
+
 //Morgan custom formatting
+app.use(morgan('combined', {
+	'stream': winston.stream
+}));
 app.use(morgan(function(tokens, req, res) {
 	var status = tokens.status(req, res);
 	var statusColor = status >= 500 ?
@@ -70,23 +104,32 @@ app.use('/', root);
 
 
 //Error handling
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-	if (req.method === 'OPTIONS') {
-		res.header('Access-Control-Allow-Methods', 'POST, GET');
-		return res.status(200).json({});
-	}
-	next();
-});
-app.use((req, res, next) => {
-	const error = new Error('Not Found');
-	error.status = 404;
-	next(error);
-});
-app.use((error, req, res, next) => { //eslint-disable-line no-unused-vars
-	res.status(error.status || 404);
-	res.send(error.status + '</br>' + error);
+//app.use((req, res, next) => {
+//	res.header('Access-Control-Allow-Origin', '*');
+//	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//	if (req.method === 'OPTIONS') {
+//		res.header('Access-Control-Allow-Methods', 'POST, GET');
+//		return res.status(200).json({});
+//	}
+//	next();
+//});
+//app.use((req, res, next) => {
+//	const error = new Error('Not Found');
+//	error.status = 404;
+//	next(error);
+//});
+//app.use((error, req, res, next) => { //eslint-disable-line no-unused-vars
+//	res.status(error.status || 404);
+//	res.send(error.status + '</br>' + error);
+//});
+app.use(function(err, req, res, next) {
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+	winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
+	res.status(err.status || 500);
+	res.render('error');
 });
 
 module.exports = app;

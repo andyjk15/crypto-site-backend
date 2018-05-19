@@ -5,77 +5,66 @@ var logger = require('winston');
 var colours = require('../../helpers/chalk.js');
 var dataP = require('./datapush');
 //var dataC = require('./datacollect');
-/* eslint-enable */
 
 require('dotenv').config({
-	path: '../../config/currencies.env'
+    path: './config/currencies.env'
 });
 
 var converted = {
-	'USD_GBP': '',
-	'USD_EUR': ''
+    'USD_GBP': '',
+    'USD_EUR': ''
 };
 var keys = Object.keys(converted);
 var data,
-	BTC,
-	BCH,
-	XMR;
+    BTC,
+    BCH,
+    XMR;
 var i = 0;
+/* eslint-enable */
+
+//Get initial data
+getConversion();
+//getBTC...other currencies
 
 //Remove these and call in APP.js
-//async.eachSeries(key, function (err) {
-//    getConversion(key, i);
-//});
-
-getConversion();
-//getUSD_EUR();
+setInterval(getConversion, 43200000);
 
 function getConversion() {
-	//for (i = 0; i < key.length; i++) {
-	var converter = 'http://free.currencyconverterapi.com/api/v5/convert?q=';
-
-	//console.log('====');
-	//console.log(key[i]);
-	//console.log(i);
-
+	var uri = 'https://openexchangerates.org/api/latest.json?app_id=' + process.env.APP_ID;
 	async.each(keys, function(err) {
-		console.log(keys[i]);
 		var key = keys[i];
-		request.get(converter + key + '&compact=y', (error, response, body) => {
-			console.log('Current key: ' + key);
-			console.log(converter);
-			if (error) {
-				console.log(colours.error('Could not retrieve ' + key + ' convertion:', error));
+		request.get(uri, (error, response, body) => {
+			data = JSON.parse(body);
+			if (error || data.error == 'true') {
+				console.log(colours.error('*Error* Could not retrieve convertions:', error +
+                    '\n' + '    Status: ' + data.status +
+                    '\n' + '    API Message: ' + data.description));
 			} else {
-				data = JSON.parse(body);
-				//console.log(keys);
-				if (key == 'USD_GBP') {
-					console.log(colours.info('Current ' + key + ' value: ' + data.USD_GBP.val));
-					converted.USD_GBP = data.USD_GBP.val;
-				} else if (key == 'USD_EUR') {
-					console.log(colours.info('Current ' + key + ' value: ' + data.USD_EUR.val));
-					converted.USD_EUR = data.USD_EUR.val;
-				} else {
-					console.log(colours.warn('Currency conversion not supported'));
+				switch (key) {
+				case 'USD_GBP':
+					console.log(colours.info('*Succsss* Current ' + key +
+                            ' value: ' + data.rates.GBP));
+					converted.USD_GBP = data.rates.GBP;
+					break;
+				case 'USD_EUR':
+					console.log(colours.info('*Success* Current ' + key +
+                            ' value: ' + data.rates.EUR));
+					converted.USD_EUR = data.rates.EUR;
+					break;
+				default:
+					console.log(colours.warn('*Warning* Currency conversion not supported'));
+					break;
+                        //Add more if and when needed see:
+                        //https://docs.openexchangerates.org/docs/supported-currencies
 				}
+
 			}
 		});
 		i++;
 	});
-	//};
+	i = 0;
 }
 
-function getUSD_EUR() {
-	request.get(process.env.USD_EUR, (error, response, body) => {
-		if (error) {
-			console.log(colours.error('Could not retrieve USD -> EUR convertion:', error));
-		} else {
-			data = JSON.parse(body);
-			console.log(colours.info('Current USD -> EUR value: ' + data.USD_EUR.val));
-			converted.USD_EUR = data.USD_EUR.val;
-		}
-	});
-}
 
 function getBTC() {
 
