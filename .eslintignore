@@ -18,6 +18,10 @@ build/*
 # Grunt
 Gruntfile.js
 
+# HTML & CSS
+*.html
+*.css
+
 # Temp files
 TODO
 **/*.md

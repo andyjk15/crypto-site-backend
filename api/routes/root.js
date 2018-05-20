@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var dc = require('../../app/controllers/datacollect.js');
+//var dc = require('../../app/controllers/datacollect.js');
 
 //dc.coinbase_btc_gbp();
 //Root view

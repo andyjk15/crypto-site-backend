@@ -9,8 +9,7 @@ var options = {
 		json: true,
 		maxsize: 5242880, // 5MB
 		maxFiles: 5,
-		colorize: true,
-		eol: true,
+		colorize: false,
 	},
 	console: {
 		level: 'debug',
@@ -33,10 +32,8 @@ var logger = new winston.Logger({
 
 //Morgan Stream
 logger.stream = {
-	write: function(message, encoding){
-		//logger.error(message);
-		console.log(message);
-		console.log(encoding);
+	write: function(message){  //encoding
+		logger.error(message);
 	}
 };
 

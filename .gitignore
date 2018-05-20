@@ -59,10 +59,13 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-#.env
-#*.env
+.env
+*.env
 
 # .git folder
 .git
 
 TODO
+
+# Webstorm
+.idea/

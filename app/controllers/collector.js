@@ -1,13 +1,14 @@
 /* eslint-disable */
 var request = require('request');
 var async = require("async");
-var logger = require('winston');
-var colours = require('../../helpers/chalk.js');
-var dataP = require('./datapush');
+var appRoot = require('app-root-path');
+var winston = require(appRoot + '/helpers/winston.js');
+var colours = require(appRoot + '/helpers/chalk.js');
+//var dataP = require('./datapush');
 //var dataC = require('./datacollect');
 
 require('dotenv').config({
-    path: './config/currencies.env'
+    path: appRoot + '/config/currencies.env'
 });
 
 var converted = {
@@ -20,6 +21,7 @@ var data,
     BCH,
     XMR;
 var i = 0;
+var message;
 /* eslint-enable */
 
 //Get initial data
@@ -30,44 +32,50 @@ getConversion();
 setInterval(getConversion, 43200000);
 
 function getConversion() {
-	var uri = 'https://openexchangerates.org/api/latest.json?app_id=' + process.env.APP_ID;
-	async.each(keys, function(err) {
-		var key = keys[i];
-		request.get(uri, (error, response, body) => {
-			data = JSON.parse(body);
-			if (error || data.error == 'true') {
-				console.log(colours.error('*Error* Could not retrieve convertions:', error +
+    var uri = 'https://openexchangerates.org/api/latest.json?app_id=' + process.env.APP_ID;
+    async.each(keys, function() {
+        var key = keys[i];
+        request.get(uri, (error, response, body) => {
+            data = JSON.parse(body);
+            if (error || data.error == 'true') {
+                message = '*Error* Could not retrieve conversions: ';
+                console.log(colours.error(message, error +
                     '\n' + '    Status: ' + data.status +
                     '\n' + '    API Message: ' + data.description));
-			} else {
-				switch (key) {
-				case 'USD_GBP':
-					console.log(colours.info('*Succsss* Current ' + key +
+                winston.error(`${data.status} - ${data.description} - ${message+error}`);
+            } else {
+                switch (key) {
+                    case 'USD_GBP':
+                        console.log(colours.info('*Succsss* Current ' + key +
                             ' value: ' + data.rates.GBP));
-					converted.USD_GBP = data.rates.GBP;
-					break;
-				case 'USD_EUR':
-					console.log(colours.info('*Success* Current ' + key +
+                        winston.info(`Success - ${key} - ${data.rates.GBP}`);
+                        converted.USD_GBP = data.rates.GBP;
+                        break;
+                    case 'USD_EUR':
+                        console.log(colours.info('*Success* Current ' + key +
                             ' value: ' + data.rates.EUR));
-					converted.USD_EUR = data.rates.EUR;
-					break;
-				default:
-					console.log(colours.warn('*Warning* Currency conversion not supported'));
-					break;
+                        winston.info(`Success - ${key} - ${data.rates.EUR}`);
+                        converted.USD_EUR = data.rates.EUR;
+                        break;
+                    default:
+                        message = 'Currency conversion not supported';
+                        console.log(colours.warn('*Warning* ', message));
+                        winston.warn(`${message}`);
+                        break;
                         //Add more if and when needed see:
                         //https://docs.openexchangerates.org/docs/supported-currencies
-				}
+                }
 
-			}
-		});
-		i++;
-	});
-	i = 0;
+            }
+        });
+        i++;
+    });
+    i = 0;
 }
 
 
-function getBTC() {
+//function getBTC() {
 
-}
+//}
 
-//module.exports.convert = convert;
+module.exports.convert = converted;
