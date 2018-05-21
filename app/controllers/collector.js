@@ -54,20 +54,20 @@ var BTCincreases = [];
 
 var keys = Object.keys(converted);
 var data,
+    crypdata,
+    currency,
     BTC,
     BCH,
     XMR;
-var i = 0;
+var i = 0,
+    x = 0;
 var message;
 /* eslint-enable */
 
-
-
 //Get initial data
-getConversion();
+//getConversion();
 getCryptoPrices();
 getHashrateNetwork();
-//getBTC...other currencies
 
 //Remove these and call in APP.js
 setInterval(getConversion, 43200000);
@@ -80,27 +80,19 @@ function getConversion() {
             data = JSON.parse(body);
             if (error || data.error == 'true') {
                 message = '*Error* Could not retrieve conversions: ';
-                //console.log(colours.error(message, error +
-                //    '\n' + '    Status: ' + data.status +
-                //    '\n' + '    API Message: ' + data.description));
                 winston.error(`${data.status} - ${data.description} - ${message+error}`);
             } else {
                 switch (key) {
                     case 'USD_GBP':
-                        //console.log(colours.info('*Succsss* Current ' + key +
-                        //    ' value: ' + data.rates.GBP));
                         winston.info(`Success - ${key} - ${data.rates.GBP}`);
                         converted.USD_GBP = data.rates.GBP;
                         break;
                     case 'USD_EUR':
-                        //console.log(colours.info('*Success* Current ' + key +
-                        //    ' value: ' + data.rates.EUR));
                         winston.info(`Success - ${key} - ${data.rates.EUR}`);
                         converted.USD_EUR = data.rates.EUR;
                         break;
                     default:
                         message = 'Currency conversion not supported';
-                        //console.log(colours.warn('*Warning* ', message));
                         winston.warn(`Warning - ${message}`);
                         break;
                         //Add more if and when needed see:
@@ -114,16 +106,77 @@ function getConversion() {
     i = 0;
 }
 
-
 function getCryptoPrices() {
-    for (i = 0; i < exchanges.length-1; i++) {
+        async.each(exchanges, function() {
+            var exchange = exchanges[x];
+            if (exchange !== '') {
+                request.get(exchange, (err, res, body) => {
 
-    }
+                if(err){
+                    winston.error(`Invald currency syntax`, err);
+                    process.exit();
+                }
+                    cryptdata = JSON.parse(body);
+                    switchcrypto(exchange, cryptdata);
+                });
+            }
+        x++;
+     });
+    x = 0;
 }
 
-function getBTC() {
-    var uri = process.env.BTCe1;
-
+function switchcrypto(exchange, cryptdata) {
+    console.log(exchange);
+    switch (true) {
+        case /BTCU/.test(exchange)||/btcu/.test(exchange)||/btc-/.test(exchange)||/BTC-/.test(exchange):
+            console.log("• Matched 'BTC' test");
+            console.log(cryptdata);
+            break;
+        case /BCH/.test(exchange)||/bch/.test(exchange)||/bch-/.test(exchange)||/BCH-/.test(exchange):
+            console.log("• Matched 'BCH' test");
+            console.log(cryptdata);
+            break;
+        case /ETH/.test(exchange)||/eth/.test(exchange)||/eth-/.test(exchange)||/ETH-/.test(exchange):
+            console.log("• Matched 'ETH' test");
+            console.log(cryptdata);
+            break;
+        case /ETN/.test(exchange)||/etn/.test(exchange)||/etn-/.test(exchange)||/ETN-/.test(exchange):
+            console.log("• Matched 'ETN' test");
+            console.log(cryptdata);
+            break;
+        case /DASH/.test(exchange)||/dash/.test(exchange)||/dash-/.test(exchange)||/DASH-/.test(exchange):
+            console.log("• Matched 'DASH' test");
+            console.log(cryptdata);
+            break;
+        case /DCR/.test(exchange)||/dcr/.test(exchange)||/dcr-/.test(exchange)||/DCR-/.test(exchange):
+            console.log("• Matched 'DCR' test");
+            console.log(cryptdata);
+            break;
+        case /XMR/.test(exchange)||/xmr/.test(exchange)||/xmr-/.test(exchange)||/XMR-/.test(exchange):
+            console.log("• Matched 'XMR' test");
+            console.log(cryptdata);
+            console.log(cryptdata.result.XXMRZUSD.l);
+            break;
+        case /LTC/.test(exchange)||/ltc/.test(exchange)||/ltc-/.test(exchange)||/LTC-/.test(exchange):
+            console.log("• Matched 'LTC' test");
+            console.log(cryptdata);
+            break;
+        case /SC/.test(exchange)||/sc/.test(exchange)||/sc-/.test(exchange)||/SC-/.test(exchange):
+            console.log("• Matched 'SC' test");
+            console.log(cryptdata);
+            break;
+        case /UBQ/.test(exchange)||/ubq/.test(exchange)||/ubq-/.test(exchange)||/UBQ-/.test(exchange):
+            console.log("• Matched 'UBQ' test");
+            console.log(cryptdata);
+            break;
+      default:
+        winston.error(`Currency ${exchange} not supported`);
+        console.log(cryptdata);
+        process.exit();
+        break;
+    }
+    //Add more if and when needed
+    //DO NOT ADD Exchanges that do BTC_othercurrency or BTC-othercurrency as I cannot be bothered to handle this
 }
 
 function getHashrateNetwork() {
