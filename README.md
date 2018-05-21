@@ -56,6 +56,13 @@ To run the app
 npm start
 ```
 
+## Configuration
+Don't forget to set up the enviroment variables:
+```
+APP_ID            - This is the api key to the currency conversion api of your choice (I use https://openexchangerates.org/account)
+SENDGRID_API_KEY  - API for Sendgrid (If you want the email feature)
+```
+
 ## Running the tests
 
 The test are written for Jasmine, prior to running the test install Jasmine globally on your system.
