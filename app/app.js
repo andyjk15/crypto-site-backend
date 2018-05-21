@@ -48,11 +48,7 @@ datacollect.stderr.on('data', function(data) {
     );
 });
 
-
 //Morgan custom formatting
-//app.use(morgan('combined', {
-//    'stream': winston.stream
-//}));
 app.use(morgan(function(tokens, req, res) {
     var status = tokens.status(req, res);
     var statusColor = status >= 500 ?
