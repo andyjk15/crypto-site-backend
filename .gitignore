@@ -64,7 +64,5 @@ typings/
 # .git folder
 .git
 
-TODO
-
 # Webstorm
 .idea/
