@@ -61,6 +61,8 @@ Don't forget to set up the enviroment variables:
 ```
 APP_ID            - This is the api key to the currency conversion api of your choice (I use https://openexchangerates.org/account)
 SENDGRID_API_KEY  - API for Sendgrid (If you want the email feature)
+
+export ENV_VAR='SOME_KEY'
 ```
 
 ## Running the tests
