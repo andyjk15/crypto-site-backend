@@ -54,10 +54,11 @@ var BTCincreases = [];
 
 var keys = Object.keys(converted);
 var data,
-    crypdata,
+    cryptdata,
     currency,
-    BTC,
-    BCH,
+    BTCtotal,
+    BTC = [],
+    BCH = [],
     XMR;
 var i = 0,
     x = 0;
@@ -121,52 +122,54 @@ function getCryptoPrices() {
                 });
             }
         x++;
-     });
+    });
     x = 0;
+    getAverages();
 }
 
 function switchcrypto(exchange, cryptdata) {
-    console.log(exchange);
     switch (true) {
         case /BTCU/.test(exchange)||/btcu/.test(exchange)||/btc-/.test(exchange)||/BTC-/.test(exchange):
-            console.log("• Matched 'BTC' test");
-            console.log(cryptdata);
+            console.log('• Matched BTC test');
+            BTC.push(getExchangeJSON(exchange));
+            BTCprices.push(getAverages(BTC));
             break;
         case /BCH/.test(exchange)||/bch/.test(exchange)||/bch-/.test(exchange)||/BCH-/.test(exchange):
-            console.log("• Matched 'BCH' test");
-            console.log(cryptdata);
+            console.log('• Matched BCH test');
+            BCH.push(getExchangeJSON(exchange));
+            BCHprices.push(getAverages(BCH));
             break;
         case /ETH/.test(exchange)||/eth/.test(exchange)||/eth-/.test(exchange)||/ETH-/.test(exchange):
-            console.log("• Matched 'ETH' test");
-            console.log(cryptdata);
+            console.log('• Matched ETH test');
+            ETH.push(getExchangeJSON(exchange));
+            ETHprices.push(getAverages(ETH));
             break;
         case /ETN/.test(exchange)||/etn/.test(exchange)||/etn-/.test(exchange)||/ETN-/.test(exchange):
-            console.log("• Matched 'ETN' test");
+            console.log('• Matched ETN test');
             console.log(cryptdata);
             break;
         case /DASH/.test(exchange)||/dash/.test(exchange)||/dash-/.test(exchange)||/DASH-/.test(exchange):
-            console.log("• Matched 'DASH' test");
+            console.log('• Matched DASH test');
             console.log(cryptdata);
             break;
         case /DCR/.test(exchange)||/dcr/.test(exchange)||/dcr-/.test(exchange)||/DCR-/.test(exchange):
-            console.log("• Matched 'DCR' test");
+            console.log('• Matched DCR test');
             console.log(cryptdata);
             break;
         case /XMR/.test(exchange)||/xmr/.test(exchange)||/xmr-/.test(exchange)||/XMR-/.test(exchange):
-            console.log("• Matched 'XMR' test");
+            console.log('• Matched XMR test');
             console.log(cryptdata);
-            console.log(cryptdata.result.XXMRZUSD.l);
             break;
         case /LTC/.test(exchange)||/ltc/.test(exchange)||/ltc-/.test(exchange)||/LTC-/.test(exchange):
-            console.log("• Matched 'LTC' test");
+            console.log('• Matched LTC test');
             console.log(cryptdata);
             break;
         case /SC/.test(exchange)||/sc/.test(exchange)||/sc-/.test(exchange)||/SC-/.test(exchange):
-            console.log("• Matched 'SC' test");
+            console.log('• Matched SC test');
             console.log(cryptdata);
             break;
         case /UBQ/.test(exchange)||/ubq/.test(exchange)||/ubq-/.test(exchange)||/UBQ-/.test(exchange):
-            console.log("• Matched 'UBQ' test");
+            console.log('• Matched UBQ test');
             console.log(cryptdata);
             break;
       default:
@@ -177,6 +180,46 @@ function switchcrypto(exchange, cryptdata) {
     }
     //Add more if and when needed
     //DO NOT ADD Exchanges that do BTC_othercurrency or BTC-othercurrency as I cannot be bothered to handle this
+}
+
+function getExchangeJSON(exchange) {
+    var total;
+    if (exchange.includes('bitfinex')) {
+        total = (parseInt(cryptdata.mid) +
+            parseInt(cryptdata.low) +
+            parseInt(cryptdata.high))/3;
+        return total;
+    } else if (exchange.includes('gdax')) {
+        total = (parseInt(cryptdata.price));
+        return total;
+    } else if (exchange.includes('hitbtc')) {
+        total = (parseInt(cryptdata.low) +
+            parseInt(cryptdata.high) +
+            parseInt(cryptdata.last))/3;
+        return total;
+    } else if (exchange.includes('kucoin')) {
+        total = (parseInt(cryptdata.data.low).toPrecision() +
+            parseInt(cryptdata.data.high).toPrecision() +
+            parseInt(cryptdata.data.lastDealPrice).toPrecision())/3;
+        return total;
+    } else if (exchange.includes('cryptopia')) {
+        total = (parseInt(cryptdata.Data.Low) +
+            parseInt(cryptdata.Data.High) +
+            parseInt(cryptdata.Data.LastPrice))/3;
+        return total;
+    } else if (exchange.includes('binance')) {
+        total = (parseInt(cryptdata.price));
+        return total;
+    } else { winston.error(`404 - Could not GET json - Unknown exchange`);}
+}
+
+function getAverges(exchangeAverages) {
+    var total;
+    for ( x = 0; x < exchangeAverages.length; x++) {
+        total += exchangeAverages[x];
+    }
+    var average = total / exchangeAverages.length;
+    return average;
 }
 
 function getHashrateNetwork() {
