@@ -4,6 +4,7 @@ var async = require("async");
 var appRoot = require('app-root-path');
 var winston = require(appRoot + '/helpers/winston.js');
 var colours = require(appRoot + '/helpers/chalk.js');
+var fs = require('fs');
 //var dataP = require('./datapush');
 //var dataC = require('./datacollect');
 
@@ -18,65 +19,65 @@ var converted = {
 var exchanges = [
     process.env.BTCe1,
     process.env.BTCe2,
-    process.env.BTCe3,
-    process.env.BCHe1,
-    process.env.BCHe2,
-    process.env.BCHe3,
-    process.env.ETHe1,
-    process.env.ETHe2,
-    process.env.ETHe3,
-    process.env.ETNe1,
-    process.env.ETNe2,
-    process.env.ETNe3,
-    process.env.DASHe1,
-    process.env.DASHe2,
-    process.env.DASHe3,
-    process.env.DCRe1,
-    process.env.DCRe2,
-    process.env.DCRe3,
-    process.env.XMRe1,
-    process.env.XMRe2,
-    process.env.XMRe3,
-    process.env.LTCe1,
-    process.env.LTCe2,
-    process.env.LTCe3,
-    process.env.SCe1,
-    process.env.SCe2,
-    process.env.SCe3,
-    process.env.UBQe1,
-    process.env.UBQe2,
-    process.env.UBQe3,
+    // process.env.BCHe1,
+    // process.env.BCHe2,
+    // process.env.ETHe1,
+    // process.env.ETHe2,
+    // process.env.ETNe1,
+    // process.env.ETNe2,
+    // process.env.DASHe1,
+    // process.env.DASHe2,
+    // process.env.DCRe1,
+    // process.env.DCRe2,
+    // process.env.XMRe1,
+    // process.env.XMRe2,
+    // process.env.LTCe1,
+    // process.env.LTCe2,
+    // process.env.SCe1,
+    // process.env.SCe2,
+    // process.env.UBQe1,
+    // process.env.UBQe2,
 ];
 
 var BTCprices = [],
     BCHprices = [],
-    ETHprices = [];
+    ETHprices = [],
+    ETNprices = [],
+    DASHprices = [],
+    DCRprices = [],
+    XMRprices = [],
+    LTCprices = [],
+    SCprices = [],
+    UBQprices = [];
 var BTCincreases = [];
 
 
 var keys = Object.keys(converted);
-var data,
-    cryptdata,
-    currency,
-    BTCtotal,
-    BTC = [],
+var BTC = [],
     BCH = [],
     ETH = [],
-    XMR = [];
-var i = 0,
-    x = 0;
-var message;
+    ETN = [],
+    DASH = [],
+    DCR = [],
+    XMR = [],
+    LTC = [],
+    SC = [],
+    UBQ = [];
+
+var cryptdata;
 /* eslint-enable */
 
 //Get initial data
 //getConversion();
 getCryptoPrices();
-getHashrateNetwork();
+// getHashrateNetwork();
 
 //Remove these and call in APP.js
 setInterval(getConversion, 43200000);
 
 function getConversion() {
+    var data, message;
+    var i = 0;
     var uri = 'https://openexchangerates.org/api/latest.json?app_id=' + process.env.APP_ID;
     async.each(keys, function() {
         var key = keys[i];
@@ -111,74 +112,107 @@ function getConversion() {
 }
 
 function getCryptoPrices() {
-        async.each(exchanges, function() {
-            var exchange = exchanges[x];
-            if (exchange !== '') {
-                request.get(exchange, (err, res, body) => {
+    var x = 0;
+    async.each(exchanges, function() {
+        var exchange = exchanges[x];
+        if (exchange !== '') {
+            request.get(exchange, (err, res, body) => {
 
-                if(err){
+                if (err) {
                     winston.error(`Invald currency syntax - ${err}`);
                     process.exit();
                 }
-                    cryptdata = JSON.parse(body);
-                    switchcrypto(exchange, cryptdata);
-                });
-            }
+                cryptdata = JSON.parse(body);
+                switchcrypto(exchange, cryptdata);
+            });
+        }
         x++;
+
     });
     x = 0;
 }
 
 function switchcrypto(exchange, cryptdata) {
     switch (true) {
-        case /BTCU/.test(exchange)||/btcu/.test(exchange)||/btc-/.test(exchange)||/BTC-/.test(exchange):
-            console.log('• Matched BTC test');
-            BTC.push(getExchangeJSON(exchange));
-            BTCprices.push(getAverages(BTC));
+        case /BTCU/.test(exchange) || /btcu/.test(exchange) || /btc-/.test(exchange) || /BTC-/.test(exchange):
+            var wait = async () => {                            /* eslint-disable */
+                var ExJSON = await getExchangeJSON(exchange);   /* eslint-enable */
+                BTC.push(ExJSON);
+                var count = await rdfile('BTCe');
+                if (BTC.length === count) {
+                    var prices = await getAverages(BTC);
+                    BTCprices.push(prices);
+                }
+            }
+            wait();
+            BTC = []
             break;
-        case /BCH/.test(exchange)||/bch/.test(exchange)||/bch-/.test(exchange)||/BCH-/.test(exchange):
-            console.log('• Matched BCH test');
-            BCH.push(getExchangeJSON(exchange));
-            BCHprices.push(getAverages(BCH));
+        case /BCH/.test(exchange) || /bch/.test(exchange) || /bch-/.test(exchange) || /BCH-/.test(exchange):
+            var wait = async () => {                            /* eslint-disable */
+                var ExJSON = await getExchangeJSON(exchange);   /* eslint-disable */
+                BCH.push(ExJSON);
+                var count = await rdfile('BCHe');
+                if (BCH.length === count) {
+                    var prices = await getAverages(BCH);
+                    BCHprices.push(prices);
+                }
+            }
+            wait();
+            BCH = []
             break;
-        case /ETH/.test(exchange)||/eth/.test(exchange)||/eth-/.test(exchange)||/ETH-/.test(exchange):
-            console.log('• Matched ETH test');
-            ETH.push(getExchangeJSON(exchange));
-            ETHprices.push(getAverages(ETH));
+        case /ETH/.test(exchange) || /eth/.test(exchange) || /eth-/.test(exchange) || /ETH-/.test(exchange):
+            var wait = async () => {                            /* eslint-disable */
+                var ExJSON = await getExchangeJSON(exchange);   /* eslint-disable */
+                ETH.push(ExJSON);
+                var count = await rdfile('ETHe');
+                if (ETH.length === count) {
+                    var prices = await getAverages(ETH);
+                    ETHprices.push(prices);
+                }
+            }
+            wait();
+            ETH = []
             break;
-        case /ETN/.test(exchange)||/etn/.test(exchange)||/etn-/.test(exchange)||/ETN-/.test(exchange):
+        case /ETN/.test(exchange) || /etn/.test(exchange) || /etn-/.test(exchange) || /ETN-/.test(exchange):
             console.log('• Matched ETN test');
-            console.log(cryptdata);
+            ETN.push(getExchangeJSON(exchange));
+            ETNprices.push(getAverages(ETN));
             break;
-        case /DASH/.test(exchange)||/dash/.test(exchange)||/dash-/.test(exchange)||/DASH-/.test(exchange):
+        case /DASH/.test(exchange) || /dash/.test(exchange) || /dash-/.test(exchange) || /DASH-/.test(exchange):
             console.log('• Matched DASH test');
-            console.log(cryptdata);
+            DASH.push(getExchangeJSON(exchange));
+            DASHprices.push(getAverages(DASH));
             break;
-        case /DCR/.test(exchange)||/dcr/.test(exchange)||/dcr-/.test(exchange)||/DCR-/.test(exchange):
+        case /DCR/.test(exchange) || /dcr/.test(exchange) || /dcr-/.test(exchange) || /DCR-/.test(exchange):
             console.log('• Matched DCR test');
-            console.log(cryptdata);
+            DCR.push(getExchangeJSON(exchange));
+            DCRprices.push(getAverages(DCR));
             break;
-        case /XMR/.test(exchange)||/xmr/.test(exchange)||/xmr-/.test(exchange)||/XMR-/.test(exchange):
+        case /XMR/.test(exchange) || /xmr/.test(exchange) || /xmr-/.test(exchange) || /XMR-/.test(exchange):
             console.log('• Matched XMR test');
-            console.log(cryptdata);
+            XMR.push(getExchangeJSON(exchange));
+            XMRprices.push(getAverages(XMR));
             break;
-        case /LTC/.test(exchange)||/ltc/.test(exchange)||/ltc-/.test(exchange)||/LTC-/.test(exchange):
+        case /LTC/.test(exchange) || /ltc/.test(exchange) || /ltc-/.test(exchange) || /LTC-/.test(exchange):
             console.log('• Matched LTC test');
-            console.log(cryptdata);
+            LTC.push(getExchangeJSON(exchange));
+            LTCprices.push(getAverages(LTC));
             break;
-        case /SC/.test(exchange)||/sc/.test(exchange)||/sc-/.test(exchange)||/SC-/.test(exchange):
+        case /SC/.test(exchange) || /sc/.test(exchange) || /sc-/.test(exchange) || /SC-/.test(exchange):
             console.log('• Matched SC test');
-            console.log(cryptdata);
+            SC.push(getExchangeJSON(exchange));
+            SCprices.push(getAverages(SC));
             break;
-        case /UBQ/.test(exchange)||/ubq/.test(exchange)||/ubq-/.test(exchange)||/UBQ-/.test(exchange):
+        case /UBQ/.test(exchange) || /ubq/.test(exchange) || /ubq-/.test(exchange) || /UBQ-/.test(exchange):
             console.log('• Matched UBQ test');
-            console.log(cryptdata);
+            UBQ.push(getExchangeJSON(exchange));
+            UBQprices.push(getAverages(UBQ));
             break;
-      default:
-        winston.error(`Currency not supported - ${exchange}`);
-        console.log(cryptdata);
-        process.exit();
-        break;
+        default:
+            winston.error(`Currency not supported - ${exchange}`);
+            //console.log(cryptdata);
+            process.exit();
+            break;
     }
     //Add more if and when needed
     //DO NOT ADD Exchanges that do BTC_othercurrency or BTC-othercurrency as I cannot be bothered to handle this
@@ -186,42 +220,65 @@ function switchcrypto(exchange, cryptdata) {
 
 function getExchangeJSON(exchange) {
     var total;
-    if (exchange.includes('bitfinex')) {
-        total = (parseInt(cryptdata.mid) +
-            parseInt(cryptdata.low) +
-            parseInt(cryptdata.high))/3;
-        return total;
-    } else if (exchange.includes('gdax')) {
-        total = (parseInt(cryptdata.price));
-        return total;
-    } else if (exchange.includes('hitbtc')) {
-        total = (parseInt(cryptdata.low) +
-            parseInt(cryptdata.high) +
-            parseInt(cryptdata.last))/3;
-        return total;
-    } else if (exchange.includes('kucoin')) {
-        total = (parseInt(cryptdata.data.low).toPrecision() +
-            parseInt(cryptdata.data.high).toPrecision() +
-            parseInt(cryptdata.data.lastDealPrice).toPrecision())/3;
-        return total;
-    } else if (exchange.includes('cryptopia')) {
-        total = (parseInt(cryptdata.Data.Low) +
-            parseInt(cryptdata.Data.High) +
-            parseInt(cryptdata.Data.LastPrice))/3;
-        return total;
-    } else if (exchange.includes('binance')) {
-        total = (parseInt(cryptdata.price));
-        return total;
-    } else { winston.error(`404 - Could not GET json - Unknown exchange ${exchange}`);}
+    var promise = new Promise(function(resolve, reject) {
+        if (exchange.includes('bitfinex')) {
+            total = (parseInt(cryptdata.mid) +
+                parseInt(cryptdata.low) +
+                parseInt(cryptdata.high));
+            total = total / 3;
+            resolve(total);
+        } else if (exchange.includes('hitbtc')) {
+            total = (parseInt(cryptdata.low) +
+                parseInt(cryptdata.high) +
+                parseInt(cryptdata.last));
+            total = total / 3;
+            resolve(total);
+        } else if (exchange.includes('kucoin')) {
+            total = (parseInt(cryptdata.data.low).toPrecision() +
+                parseInt(cryptdata.data.high).toPrecision() +
+                parseInt(cryptdata.data.lastDealPrice).toPrecision()) / 3;
+            resolve(total);
+        } else if (exchange.includes('cryptopia')) {
+            total = (parseInt(cryptdata.Data.Low) +
+                parseInt(cryptdata.Data.High) +
+                parseInt(cryptdata.Data.LastPrice)) / 3;
+            resolve(total);
+        } else if (exchange.includes('binance')) {
+            total = (parseInt(cryptdata.price));
+            resolve(total);
+        } else {
+            reject(winston.error(`404 - Could not GET json - Unknown exchange ${exchange}`));
+        }
+    });
+    return promise;
 }
 
 function getAverages(exchangeAverages) {
-    var total;
-    for ( x = 0; x < exchangeAverages.length; x++) {
-        total += exchangeAverages[x];
-    }
-    var average = total / exchangeAverages.length;
-    return average;
+    var promise = new Promise(function(resolve, reject) {
+        var total = exchangeAverages.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        total = total / exchangeAverages.length;
+        resolve(total);
+    });
+    return promise;
+}
+
+function rdfile(currency) {
+    var reg = new RegExp(currency, "g");
+    var promise = new Promise(function(resolve, reject) {
+        var file = fs.createReadStream(appRoot + '/config/currencies.env', {
+            start: 42
+        });
+        file.on('error', err => {
+            reject(err)
+        });
+        file.on('data', data => {
+            data = data.toString();
+            data = (data.match(reg) || []).length;
+            data = parseInt(data);
+            resolve(data);
+        });
+    });
+    return promise;
 }
 
 function getHashrateNetwork() {

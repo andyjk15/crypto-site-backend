@@ -35,6 +35,7 @@
     "dotenv": "^5.0.1",
     "express": "latest",
     "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
     "less": "^3.0.2",
     "morgan": "latest",
     "nano": "^6.4.3",

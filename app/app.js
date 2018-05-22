@@ -37,14 +37,9 @@ datacollect.stdout.on('data', function(data) {
     }
 });
 datacollect.stderr.on('data', function(data) {
-    console.log(colours.error('===') +
-        colours.error('    Collector Output    ') +
-        colours.error('===')
-    );
-    console.log(colours.error('Child Error : ' + data));
-    console.log(colours.error('===       ') +
-        colours.childPID('PID : ' + datacollect.pid) +
-        colours.error('       ===')
+    console.log(colours.error('Collector Output : ') +
+        colours.error('Child Error : ' + data) +
+        colours.childPID(' -- PID : ' + datacollect.pid)
     );
 });
 
