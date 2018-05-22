@@ -1,19 +1,19 @@
 var http = require('http');
 var app = require('./app/app.js');
 
-//Chalk colour schemes
+// Chalk colour schemes
 var colours = require('./helpers/chalk.js');
 
-//Port selection
+// Port selection
 var port = process.env.PORT || 8080;
 
-//Server creation
+// Server creation
 var server = http.createServer(app);
 server.listen(port);
 console.log(colours.warn('Listening on port: ' + port));
 
-//Exports
+// Exports
 module.exports.server = server;
-module.exports.closeServer = function() {
-    server.close();
+module.exports.closeServer = function () {
+  server.close();
 };

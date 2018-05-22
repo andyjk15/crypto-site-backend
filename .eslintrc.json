@@ -5,12 +5,13 @@
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "sourceType": "module"
-    },
-    "parserOptions": {
-        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaVersion": 8,
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
+            "sourceType": "module",
+            "ecmaFeatures": {
+                "jsx": true
+            }
         }
     },
     "rules": {
@@ -26,6 +27,7 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-redeclare": "warn"
     }
 }

@@ -2,7 +2,7 @@ var chalk = require('chalk');
 
 module.exports.chalk = chalk;
 
-//Chalk colours
+// Chalk colours
 module.exports.warn = chalk.bold.yellow;
 module.exports.error = chalk.bold.red;
 module.exports.info = chalk.bold.green;
