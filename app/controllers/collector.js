@@ -48,7 +48,9 @@ var exchanges = [
     process.env.UBQe3,
 ];
 
-var BTCprices = [];
+var BTCprices = [],
+    BCHprices = [],
+    ETHprices = [];
 var BTCincreases = [];
 
 
@@ -59,7 +61,8 @@ var data,
     BTCtotal,
     BTC = [],
     BCH = [],
-    XMR;
+    ETH = [],
+    XMR = [];
 var i = 0,
     x = 0;
 var message;
@@ -114,7 +117,7 @@ function getCryptoPrices() {
                 request.get(exchange, (err, res, body) => {
 
                 if(err){
-                    winston.error(`Invald currency syntax`, err);
+                    winston.error(`Invald currency syntax - ${err}`);
                     process.exit();
                 }
                     cryptdata = JSON.parse(body);
@@ -124,7 +127,6 @@ function getCryptoPrices() {
         x++;
     });
     x = 0;
-    getAverages();
 }
 
 function switchcrypto(exchange, cryptdata) {
@@ -173,7 +175,7 @@ function switchcrypto(exchange, cryptdata) {
             console.log(cryptdata);
             break;
       default:
-        winston.error(`Currency ${exchange} not supported`);
+        winston.error(`Currency not supported - ${exchange}`);
         console.log(cryptdata);
         process.exit();
         break;
@@ -210,10 +212,10 @@ function getExchangeJSON(exchange) {
     } else if (exchange.includes('binance')) {
         total = (parseInt(cryptdata.price));
         return total;
-    } else { winston.error(`404 - Could not GET json - Unknown exchange`);}
+    } else { winston.error(`404 - Could not GET json - Unknown exchange ${exchange}`);}
 }
 
-function getAverges(exchangeAverages) {
+function getAverages(exchangeAverages) {
     var total;
     for ( x = 0; x < exchangeAverages.length; x++) {
         total += exchangeAverages[x];
