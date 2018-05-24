@@ -3,7 +3,7 @@ var favicon = require('serve-favicon');
 var app = express();
 var appRoot = require('app-root-path');
 var winston = require(appRoot + '/helpers/winston.js');
-var colours = require('../helpers/chalk.js');
+var colours = require(appRoot + '/helpers/chalk.js');
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -12,8 +12,7 @@ var bodyParser = require('body-parser');
 
 // Spawn collector child process
 var spawn = require('child_process').spawn;
-
-var datacollect = spawn('node', ['app/controllers/collector.js'], {
+var datacollect = spawn('node', [appRoot + '/app/controllers/collector.js'], {
   detached: true
 });
 datacollect.stdout.on('data', function (data) {
@@ -58,13 +57,11 @@ app.use(morgan(function (tokens, req, res) {
         ' ' + colours.chalk.reset('-') +
         ' ' + colours.irrel(tokens['remote-addr'](req, res));
 }));
-
 function padLeft (str, len) {
   return len > str.length
     ? (new Array(len - str.length + 1)).join(' ') + str
     : str;
 }
-
 function padRight (str, len) {
   return len > str.length
     ? str + (new Array(len - str.length + 1)).join(' ')
@@ -77,14 +74,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({
-  secret: 'anystringoftext',
+  secret: 'anystringoftext',  //CHANGE THIS!!!!
   saveUninitialized: true,
   resave: true
 }));
 app.use(favicon(__dirname + '/images/favicon.ico'));
 
 // View engine
-app.set('view engine', 'pug');
+app.set('view engine', 'pug');  //KILL USE ANGULAR
 
 // Routes
 var root = require('../api/routes/root.js');

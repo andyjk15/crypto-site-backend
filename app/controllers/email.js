@@ -1,8 +1,9 @@
 // Using SendGrid's v3 Node.js Library
 // // https://github.com/sendgrid/sendgrid-nodejs
+var appRoot = require('app-root-path');
 var sgMail = require('@sendgrid/mail');
 require('dotenv').config({
-  path: '../../config/sendgrid.env'
+  path: appRoot + '/config/sendgrid.env'
 });
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
