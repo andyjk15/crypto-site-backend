@@ -80,7 +80,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: `${process.env.SESSION_SECRET}`,
     saveUninitialized: true,
     resave: true
 }));
