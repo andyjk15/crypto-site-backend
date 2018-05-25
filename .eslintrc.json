@@ -28,6 +28,7 @@
             "error",
             "always"
         ],
-        "no-redeclare": "warn"
+        "no-redeclare": "warn",
+        "no-unused-vars": "warn"
     }
 }
