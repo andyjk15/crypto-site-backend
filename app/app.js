@@ -10,6 +10,10 @@ var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
+require('dotenv').config({
+    path: appRoot + '/config/currencies.env'
+});
+
 // Spawn collector child process
 var spawn = require('child_process').spawn;
 var datacollect = spawn('node', [appRoot + '/app/controllers/collector.js'], {
@@ -76,7 +80,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({
-    secret: 'anystringoftext', //CHANGE THIS!!!!
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: true
 }));
