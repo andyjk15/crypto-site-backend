@@ -107,7 +107,6 @@ pm2 monit
 
 * [Express](https://expressjs.com/) -- Framework
 * [Nano](https://github.com/apache/couchdb-nano) -- CouchDB
-* [Pug](https://pugjs.org/api/getting-started.html/) -- JS HTML templater
 * [Less](http://lesscss.org/) -- CSS templater
 
 ### Testing With
