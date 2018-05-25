@@ -15,6 +15,6 @@ console.log(colours.warn('Listening on port: ' + port));
 // Exports
 module.exports.server = server;
 module.exports.port = port;
-module.exports.closeServer = function () {
-  server.close();
+module.exports.closeServer = function() {
+    server.close();
 };

@@ -1,5 +1,10 @@
 var appRoot = require('app-root-path');
-var winston = require('winston');
+var winston = require('winston'),
+    winstonCouch = require('winston-couchdb').Couchdb;
+
+require('dotenv').config({
+    path: appRoot + '/config/currencies.env'
+});
 
 var options = {
   file: {
@@ -20,6 +25,15 @@ var options = {
 
   }
 };
+
+winston.add(winstonCouch, {
+    host: 'localhost'
+    , port: 5984
+    // optional
+    , auth: {username: process.env.COUCH_USER, password: process.env.COUCH_PASS}
+    , secure: false
+    , level: 'info'
+});
 
 // Instantiate new Logger
 var logger = new winston.Logger({

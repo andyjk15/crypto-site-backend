@@ -42,7 +42,8 @@
     "nano": "^6.4.3",
     "request": "^2.85.0",
     "serve-favicon": "^2.5.0",
-    "winston": "^2.4.2"
+    "winston": "^2.4.2",
+    "winston-couchdb": "^0.6.3"
   },
   "devDependencies": {
     "eslint": "latest",
