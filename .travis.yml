@@ -5,7 +5,6 @@ node_js:
   - "2.5"
   - "3.3"
   - "4.8"
-  env: "APP_ID"
   - "5.12"
   - "6.12"
   - "7.10"
@@ -26,6 +25,11 @@ sudo: false
 cache:
   directories:
     - node_modules
+branches:
+  only:
+    - master
+notifications:
+  email: false
 before_install:
   # Skip updating shrinkwrap / lock
   - "npm config set shrinkwrap true"
