@@ -15,7 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '**/*.js',
+      'app/**/*.js',
+      'api/**/*.js',
+      'server.js',
       'spec/**/*.spec.js'
     ],
 
@@ -40,7 +42,7 @@ module.exports = function(config) {
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
-    }
+    },
 
     // web server port
     port: 9876,
