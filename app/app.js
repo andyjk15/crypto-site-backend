@@ -91,7 +91,7 @@ app.set('view engine', 'pug'); //KILL USE ANGULAR
 
 // Routes
 var root = require('../api/routes/root.js');
-app.use('/', root);
+app.use('/api', root);
 
 // Error handling
 app.use((req, res, next) => {
