@@ -99,7 +99,10 @@ function getCryptoPrices() {
                     process.exit();
                 }
                 var cryptdata = JSON.parse(body);
-                state_changes.getCrypto(exchange, cryptdata); //Async BROKE add async into state_changes
+                var wait = async () => {
+                    var shit = await state_changes.getCrypto(exchange, cryptdata); //Async BROKE add async into state_changes
+                };
+                wait();
             });
         }
         x++;
