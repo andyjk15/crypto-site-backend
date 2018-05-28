@@ -5,10 +5,12 @@ var appRoot = require('app-root-path');
 var winston = require(appRoot + '/helpers/winston.js');
 var time = require('moment');
 var state_changes = require('./state_changes');
+var readLine = require('readline');
+var fs = require('fs');
 var datastore = require('./datastore');
 
 require('dotenv').config({
-    path: appRoot + '/config/currencies.env'
+    path: appRoot + '/config/keys.env'
 });
 
 var converted = {
@@ -16,41 +18,51 @@ var converted = {
     'USD_EUR': ''
 };
 
-var exchanges = [
-    process.env.BTCe1,
-    process.env.BTCe2,
-    process.env.BCHe1,
-    process.env.BCHe2,
-    process.env.ETHe1,
-    process.env.ETHe2,
-    process.env.ETNe1,
-    process.env.ETNe2,
-    process.env.DASHe1,
-    process.env.DASHe2,
-    process.env.DCRe1,
-    process.env.DCRe2,
-    process.env.XMRe1,
-    process.env.XMRe2,
-    process.env.LTCe1,
-    process.env.LTCe2,
-    process.env.SCe1,
-    process.env.SCe2,
-    process.env.UBQe1,
-    process.env.UBQe2,
-];
+var exchanges = [];
 
 var keys = Object.keys(converted);
 /* eslint-enable */
 
 // Get initial data
-getConversion();
-getCryptoPrices();
-getHashrateNetwork();
+initialCalls();
+
+async function initialCalls() {
+    let read = await readExchanges();
+    getConversion();
+    getCryptoPrices();
+    getHashrateNetwork();
+}
 
 // Remove these and call in APP.js
 setInterval(getConversion, 43200000); //12 hrs
 setInterval(getCryptoPrices, 300000); //5 mins
 setInterval(getHashrateNetwork, 120000); //2 mins
+
+function readExchanges() {
+    var promise = new Promise(function(resolve, reject) {
+        var instream = fs.createReadStream(appRoot + '/config/currencies.env'),
+            outstream = new(require('stream'))(),
+            rl = readLine.createInterface(instream, outstream);
+
+        rl.on('line', function(line) {
+                var arr = line.split('=');
+                arr[0].replace('\\', '');
+                exchanges.push({
+                    exchange: arr[0],
+                    url: arr[1]
+                });
+                console.log(exchanges);
+            })
+            .on('close', function() {
+                resolve(exchanges);
+            })
+            .on('error', function(e) {
+                winston.error(e);
+            });
+    });
+
+    return promise;
+}
 
 function getConversion() {
     var uri = `https://openexchangerates.org/api/latest.json?app_id=${process.env.APP_ID}`,
@@ -99,10 +111,9 @@ function getCryptoPrices() {
                     process.exit();
                 }
                 var cryptdata = JSON.parse(body);
-                var wait = async () => {
-                    var shit = await state_changes.getCrypto(exchange, cryptdata); //Async BROKE add async into state_changes
-                };
-                wait();
+                console.log(cryptdata);
+                state_changes.getCrypto(exchange, cryptdata); //Async BROKE add async into state_changes
+
             });
         }
         x++;
