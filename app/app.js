@@ -16,32 +16,32 @@ require('dotenv').config({
 
 // Spawn collector child process
 var spawn = require('child_process').spawn;
-var datacollect = spawn('node', [appRoot + '/app/controllers/collector.js'], {
+var collector = spawn('node', [appRoot + '/app/controllers/collector.js'], {
     detached: true
 });
-datacollect.stdout.on('data', function(data) {
+collector.stdout.on('data', function(data) {
     var log = data.toString();
     if (log.includes('*Error*')) {
         console.log(colours.childname('Collector Output : ') +
             colours.error(log) +
-            colours.childPID(' -- PID : ' + datacollect.pid)
+            colours.childPID(' -- PID : ' + collector.pid)
         );
     } else if (log.includes('*Warning*')) {
         console.log(colours.childname('Collector Output : ') +
             colours.warn(log) +
-            colours.childPID(' -- PID : ' + datacollect.pid)
+            colours.childPID(' -- PID : ' + collector.pid)
         );
     } else {
         console.log(colours.childname('Collector Output : ') +
             colours.info(log) +
-            colours.childPID(' -- PID : ' + datacollect.pid)
+            colours.childPID(' -- PID : ' + collector.pid)
         );
     }
 });
-datacollect.stderr.on('data', function(data) {
+collector.stderr.on('data', function(data) {
     console.log(colours.error('Collector Output : ') +
         colours.error('Child Error : ' + data) +
-        colours.childPID(' -- PID : ' + datacollect.pid)
+        colours.childPID(' -- PID : ' + collector.pid)
     );
 });
 

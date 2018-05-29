@@ -27,7 +27,7 @@ var BTCincreases = {},
     UBQincreases = {};
 
 function switchcrypto(exchange, cryptdata) {
-    console.log(exchange);
+    exchange = exchange.url;
     switch (true) {
         case /BTCU/.test(exchange) || /btcu/.test(exchange) || /btc-/.test(exchange) || /BTC-/.test(exchange):
             var BTC = [];

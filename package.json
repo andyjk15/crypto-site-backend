@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "format": "grunt",
-    "test": "jasmine && eslint *"
+    "test": "istanbul cover --include-all-sources jasmine-node test"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,6 @@
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "less": "^3.0.2",
-    "line-by-line": "^0.1.6",
     "moment": "^2.22.1",
     "morgan": "latest",
     "nano": "^6.4.3",
@@ -57,8 +56,9 @@
     "grunt-jsbeautifier": "^0.2.13",
     "grunt-lineending": "^1.0.0",
     "grunt-trimtrailingspaces": "^3.0.0",
-    "jasmine": "^3.1.0",
+    "istanbul": "^0.4.5",
     "jasmine-core": "^3.1.0",
+    "jasmine-node": "^1.14.5",
     "jasmine-ts-console-reporter": "^3.1.1",
     "karma": "^2.0.2",
     "karma-chrome-launcher": "^2.2.0",

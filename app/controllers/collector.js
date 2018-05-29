@@ -28,9 +28,10 @@ initialCalls();
 
 async function initialCalls() {
     let read = await readExchanges();
-    getConversion();
     getCryptoPrices();
+    getConversion();
     getHashrateNetwork();
+    process.exit();
 }
 
 // Remove these and call in APP.js
@@ -46,12 +47,12 @@ function readExchanges() {
 
         rl.on('line', function(line) {
                 var arr = line.split('=');
-                arr[0].replace('\\', '');
+                console.log(arr);
                 exchanges.push({
                     exchange: arr[0],
                     url: arr[1]
                 });
-                console.log(exchanges);
+                //console.log(exchanges);
             })
             .on('close', function() {
                 resolve(exchanges);
@@ -104,7 +105,8 @@ function getCryptoPrices() {
     var x = 0;
     async.each(exchanges, function() {
         var exchange = exchanges[x];
-        if (exchange !== '') {
+        if (exchange.url !== '') {
+            console.log(exchange);
             request.get(exchange, (err, res, body) => {
                 if (err) {
                     winston.error(`Invalid currency syntax - ${err}`);
