@@ -78,27 +78,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        cssmin: {
-            target: {
-                files: [{
-                    expand  : true,
-                    cwd     : 'app/views/css',
-                    src     : [ '*.css', '!*.min.css'],
-                    dest    : 'build/views/css/',
-                    ext     : '.css'
-                }]
-            }
-        },
-        //eslint: {
-        //    options: {
-        //        configFile: "./.eslintrc.json",
-                //rulePaths: ['./.eslintignore']
-        //    },
-        //    src: [ '**/*.js' ]
-        //},
-        pug: {
-
-        },
 
         clean: [ './src' ]
 

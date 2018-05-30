@@ -4,38 +4,72 @@
 module.exports = function(config) {
   config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '..',
+      // base path that will be used to resolve all patterns (eg. files, exclude)
+      basePath: '..',
 
 
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+      // frameworks to use
+      // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+      frameworks: ['jasmine'],
 
 
-    // list of files / patterns to load in the browser
-    files: [
-      'app/**/*.js',
-        'spec/**/*.js'
-    ],
+      // list of files / patterns to load in the browser
+      files: [
+          'app/**/*.js',
+          'api/**/*.js',
+          'server.js'
+      ],
 
 
-    // list of files / patterns to exclude
-    exclude: [],
+      // list of files / patterns to exclude
+      exclude: [],
 
 
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-        'spec/**/*.js': ['coverage'],
-        'app/**/*.js': ['coverage']
-    },
-
-      coverageReporter: {
-          type : 'html',
-          file: 'coverage/'
+      // preprocess matching files before serving them to the browser
+      // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+      preprocessors: {
+          'api/**/*.js': ['webpack', 'coverage'],
+          'app/**/*.js': ['webpack', 'coverage'],
+          'server.js': ['webpack', 'coverage']
       },
 
+      coverageReporter: {
+          reporters: [
+              {type: 'text', subdir: '.'},
+              {type: 'html', subdir: 'html/'},
+          ],
+          check: {
+              global: {
+                  statements: 50,
+                  branches: 50,
+                  functions: 50,
+                  lines: 20
+              },
+              each: {
+                  statements: 50,
+                  branches: 50,
+                  functions: 50,
+                  lines: 50
+              }
+          },
+          watermarks: {
+              statements: [50, 75],
+              functions: [50, 75],
+              branches: [50, 75],
+              lines: [50, 75]
+          }
+      },
+      // webpack: {
+      //     module: {
+      //         loaders: [
+      //             {test: /\.js$/, exclude: /node_modules/, loader: 'babel?presets[]=es2015'}
+      //         ]
+      //     },
+      //     watch: true
+      // },
+      // webpackServer: {
+      //     noInfo: true
+      // },
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -65,10 +99,10 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    // concurrency: Infinity
   });
 }
