@@ -11,7 +11,7 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
 require('dotenv').config({
-    path: appRoot + '/config/currencies.env'
+    path: appRoot + '/config/keys.env'
 });
 
 // Spawn collector child process

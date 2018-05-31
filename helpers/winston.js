@@ -3,7 +3,7 @@ var winston = require('winston'),
     winstonCouch = require('winston-couchdb').Couchdb;
 
 require('dotenv').config({
-    path: appRoot + '/config/currencies.env'
+    path: appRoot + '/config/keys.env'
 });
 
 var options = {
@@ -31,7 +31,7 @@ winston.add(winstonCouch, {
     , port: 5984
     // optional
     , auth: {username: process.env.COUCH_USER, password: process.env.COUCH_PASS}
-    , secure: false
+    , secure: true
     , level: 'info'
 });
 
