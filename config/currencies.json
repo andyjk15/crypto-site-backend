@@ -1,72 +1,46 @@
 {
   "currencies": [
     {
-      "exchange": "BTCe1",
-      "url" : "https://api.bitfinex.com/v1/pubticker/btcusd"
-    },
-    {
-      "exchange": "BTCe2",
-      "url" : "https://api.bitfinex.com/v1/pubticker/btcusd"
-    },
-    {
-      "exchange": "BCHe1",
-      "url" : "https://api.bitfinex.com/v1/pubticker/bchusd"
-    },
-    {
-      "exchange": "BCHe2",
-      "url" : "https://api.hitbtc.com/api/2/public/ticker/BCHUSD"
-    },
-    {
-      "exchange": "ETHe1",
-      "url" : "https://api.bitfinex.com/v1/pubticker/ethusd"
-    },
-    {
-      "exchange": "ETHe2",
-      "url" : "https://api.hitbtc.com/api/2/public/ticker/ETHUSD"
-    },
-    {
-      "exchange": "ETNe1",
-      "url" : "https://api.kucoin.com/v1/open/tick?symbol=ETN-BTC"
-    },
-    {
-      "exchange": "ETNe2",
-      "url" : "https://www.cryptopia.co.nz/api/GetMarket/ETN_BTC"
-    },
-    {
-      "exchange": "DASHe1",
-      "url" : "https://api.kucoin.com/v1/open/tick?symbol=DASH-BTC"
-    },
-    {
-      "exchange": "DASHe2",
-      "url" : "https://api.hitbtc.com/api/2/public/ticker/DASHUSD"
-    },
-    {
-      "exchange": "DCRe1",
-      "url" : "https://www.cryptopia.co.nz/api/GetMarket/DCR_BTC"
-    },
-    {
-      "exchange": "XMRe1",
-      "url" : "https://api.bitfinex.com/v1/pubticker/xmrusd"
-    },
-    {
-      "exchange": "XMRe2",
-      "url" : "https://api.hitbtc.com/api/2/public/ticker/XMRUSD"
-    },
-    {
-      "exchange": "LTCe1",
-      "url" : "https://api.bitfinex.com/v1/pubticker/ltcusd"
-    },
-    {
-      "exchange": "LTCe2",
-      "url" : "https://api.hitbtc.com/api/2/public/ticker/LTCUSD"
-    },
-    {
-      "exchange": "SCe1",
-      "url" : "https://api.hitbtc.com/api/2/public/ticker/SCBTC"
-    },
-    {
-      "exchange": "UBQe1",
-      "url" : "https://www.cryptopia.co.nz/api/GetMarket/UBQ_BTC"
+      "btc" : {
+        "exchange": "https://api.bitfinex.com/v1/pubticker/btcusd",
+        "fallback": "https://api.hitbtc.com/api/2/public/ticker/BTCUSD"
+      },
+      "bch" : {
+        "exchange": "https://api.bitfinex.com/v1/pubticker/bchusd",
+        "fallback": "https://api.hitbtc.com/api/2/public/ticker/BCHUSD"
+      },
+      "eth" : {
+        "exchange": "https://api.bitfinex.com/v1/pubticker/ethusd",
+        "fallback": "https://api.hitbtc.com/api/2/public/ticker/ETHUSD"
+      },
+      "etn" : {
+        "exchange": "https://api.kucoin.com/v1/open/tick?symbol=ETN-BTC",
+        "fallback": "https://www.cryptopia.co.nz/api/GetMarket/ETN_BTC"
+      },
+      "dash" : {
+        "exchange": "https://api.kucoin.com/v1/open/tick?symbol=DASH-BTC",
+        "fallback": "https://api.hitbtc.com/api/2/public/ticker/DASHUSD"
+      },
+      "dcr" : {
+        "exchange": "https://www.cryptopia.co.nz/api/GetMarket/DCR_BTC",
+        "fallback": ""
+      },
+      "xmr" : {
+        "exchange": "https://api.bitfinex.com/v1/pubticker/xmrusd",
+        "fallback": "https://api.hitbtc.com/api/2/public/ticker/XMRUSD"
+      },
+      "ltc" : {
+        "exchange": "https://api.bitfinex.com/v1/pubticker/ltcusd",
+        "fallback": "https://api.hitbtc.com/api/2/public/ticker/LTCUSD"
+      },
+      "sc" : {
+        "exchange": "https://api.hitbtc.com/api/2/public/ticker/SCBTC",
+        "fallback": ""
+      },
+      "ubq" : {
+        "exchange": "https://www.cryptopia.co.nz/api/GetMarket/UBQ_BTC",
+        "fallback": ""
+      }
     }
   ]
 }

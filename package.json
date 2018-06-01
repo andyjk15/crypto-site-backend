@@ -4,8 +4,10 @@
   "description": "Cryptocurrency Tracking Site",
   "main": "server.js",
   "scripts": {
-    "format": "grunt",
-    "test": "karma start config/karma.config.js"
+    "prune": "grunt",
+    "test": "karma start config/karma.config.js",
+    "start": "NODE_ENV=production pm2 server.js",
+    "run": "NODE_ENV=development node server.js"
   },
   "repository": {
     "type": "git",

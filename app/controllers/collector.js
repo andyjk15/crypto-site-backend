@@ -5,7 +5,7 @@ var appRoot = require('app-root-path');
 var winston = require(appRoot + '/helpers/winston.js');
 var time = require('moment');
 var state_changes = require('./state_changes');
-var readLine = require('readline');
+var exchange_list = require(appRoot + '/config/currencies.json');
 var fs = require('fs');
 var datastore = require('./datastore');
 
@@ -27,11 +27,15 @@ var keys = Object.keys(converted);
 initialCalls();
 
 async function initialCalls() {
-    let read = await readExchanges();
-    getCryptoPrices();
-    getConversion();
-    getHashrateNetwork();
-    process.exit();
+    var objectKeys = Object.keys(exchange_list.currencies);
+    console.log('objectKeys:', objectKeys);
+
+
+    //let read = await readExchanges();
+    //getCryptoPrices();
+    //getConversion();
+   // getHashrateNetwork();
+    //process.exit();
 }
 
 // Remove these and call in APP.js
@@ -41,25 +45,11 @@ setInterval(getHashrateNetwork, 120000); //2 mins
 
 function readExchanges() {
     var promise = new Promise(function(resolve, reject) {
-        var instream = fs.createReadStream(appRoot + '/config/currencies.env'),
-            outstream = new(require('stream'))(),
-            rl = readLine.createInterface(instream, outstream);
-
-        rl.on('line', function(line) {
-                var arr = line.split('=');
-                console.log(arr);
-                exchanges.push({
-                    exchange: arr[0],
-                    url: arr[1]
-                });
-                //console.log(exchanges);
-            })
-            .on('close', function() {
-                resolve(exchanges);
-            })
-            .on('error', function(e) {
-                winston.error(e);
-            });
+        //var data = JSON.parse(exchange_list.currencies);
+        // console.log(data);
+        var objectKeys = Object.keys(exchange_list.currencies);
+        console.log('objectKeys:', objectKeys);
+           // resolve(data);
     });
 
     return promise;
