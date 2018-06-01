@@ -30,6 +30,7 @@ For testing:
 Jasmine -- npm install -g jasmine
 Grunt   -- npm install -g grunt-cli
 Eslint  -- npm install -g eslint
+karma   -- npm install -g karma-cli
 ```
 
 ### Installing
@@ -74,7 +75,8 @@ npm install -g jasmine
 All the test are located under the spec/ folder.
 To run the tests simply run
 ```
-jasmine *
+npm test    -- This will run Karma which will run through coverage and jasmine tests
+jasmine *   -- Just for running of jasmine tests
 ```
 
 ## Deployment
@@ -114,6 +116,7 @@ pm2 monit
 * [Jasmine](https://jasmine.github.io/) -- Unit testing
 * [Eslint](https://eslint.org/) -- JS format and syntax testing
 * [Grunt](https://gruntjs.com/) -- Task runner, used for uglify, js-beautifier, line endings, trailing spaces, cssmin and pugjs compilation
+* [Karma](https://karma-runner.github.io/2.0/index.html) -- Coverage and unit tests
 
 ### Logging With
 
