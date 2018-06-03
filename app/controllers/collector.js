@@ -27,14 +27,10 @@ var keys = Object.keys(converted);
 initialCalls();
 
 async function initialCalls() {
-    var objectKeys = Object.keys(exchange_list.currencies);
-    console.log('objectKeys:', objectKeys);
-
-
-    //let read = await readExchanges();
-    //getCryptoPrices();
+    let read = await readExchanges();
+    getCryptoPrices();
     //getConversion();
-   // getHashrateNetwork();
+    // getHashrateNetwork();
     //process.exit();
 }
 
@@ -45,11 +41,15 @@ setInterval(getHashrateNetwork, 120000); //2 mins
 
 function readExchanges() {
     var promise = new Promise(function(resolve, reject) {
-        //var data = JSON.parse(exchange_list.currencies);
-        // console.log(data);
-        var objectKeys = Object.keys(exchange_list.currencies);
-        console.log('objectKeys:', objectKeys);
-           // resolve(data);
+        var data = exchange_list.currencies;
+        var Exchange_keys = Object.keys(data);
+        var i = 0;
+        async.each(Exchange_keys, function() {
+            var key = Exchange_keys[i];
+            exchanges.push(data[key].exchange);
+            i++;
+        });
+        resolve();
     });
 
     return promise;
@@ -92,25 +92,7 @@ function getConversion() {
 }
 
 function getCryptoPrices() {
-    var x = 0;
-    async.each(exchanges, function() {
-        var exchange = exchanges[x];
-        if (exchange.url !== '') {
-            console.log(exchange);
-            request.get(exchange, (err, res, body) => {
-                if (err) {
-                    winston.error(`Invalid currency syntax - ${err}`);
-                    process.exit();
-                }
-                var cryptdata = JSON.parse(body);
-                console.log(cryptdata);
-                state_changes.getCrypto(exchange, cryptdata); //Async BROKE add async into state_changes
-
-            });
-        }
-        x++;
-    });
-    x = 0;
+    state_changes.getCrypto(exchanges); //Async BROKE add async into state_changes
 }
 
 async function getHashrateNetwork() {

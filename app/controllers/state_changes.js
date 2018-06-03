@@ -26,7 +26,29 @@ var BTCincreases = {},
     SCincreases = {},
     UBQincreases = {};
 
-function switchcrypto(exchange, cryptdata) {
+function getCrypto(exchanges) {
+    var x = 0;
+    async.each(exchanges, function() {
+        var exchange = exchanges[x];
+        if (exchange.url !== '') {
+            //console.log(exchange);
+            request.get(exchange, (err, res, body) => {
+                if (err) {
+                    winston.error(`Invalid currency syntax - ${err}`);
+                    process.exit();
+                }
+                var cryptdata = JSON.parse(body);
+                console.log(cryptdata);
+                switchcrypto(exchange, cryptdata); //Async BROKE add async into state_changes
+
+            });
+        }
+        x++;
+    });
+    x = 0;
+}
+
+function switchcrypto(exchange, cryptdata) { //DO FALLBACK EXCHANGE CHECK HERE
     exchange = exchange.url;
     switch (true) {
         case /BTCU/.test(exchange) || /btcu/.test(exchange) || /btc-/.test(exchange) || /BTC-/.test(exchange):
@@ -180,7 +202,7 @@ function switchcrypto(exchange, cryptdata) {
             var wait = async () => {
                 var ExJSON = await getExchangeJSON(exchange, cryptdata);
                 UBQ.push(ExJSON);
-                var count = await rdfile('UBQe');
+                // var count = await rdfile('UBQe');
                 if (UBQ.length === count) {
                     var prices = await getAverages(UBQ);
                     UBQprices.push(prices);
@@ -255,29 +277,29 @@ function getAverages(exchangeAverages) {
     return promise;
 }
 
-function rdfile(currency) {
-    var reg = new RegExp(currency, 'g');
-    var promise = new Promise(function(resolve, reject) {
-        var file = fs.createReadStream(appRoot + '/config/currencies.env', {
-            start: 42
-        });
-        file.on('error', err => {
-            reject(err);
-        });
-        file.on('data', data => {
-            console.log(data);
-            data = data.toString();
-            data = (data.match(reg) || []).length;
-            data = parseInt(data);
-            resolve(data);
-        });
-    });
-    return promise;
-}
+// function rdfile(currency) {
+//     var reg = new RegExp(currency, 'g');
+//     var promise = new Promise(function(resolve, reject) {
+//         var file = fs.createReadStream(appRoot + '/config/currencies.env', {
+//             start: 42
+//         });
+//         file.on('error', err => {
+//             reject(err);
+//         });
+//         file.on('data', data => {
+//             console.log(data);
+//             data = data.toString();
+//             data = (data.match(reg) || []).length;
+//             data = parseInt(data);
+//             resolve(data);
+//         });
+//     });
+//     return promise;
+// }
 
-module.exports.getCrypto = switchcrypto;
+module.exports.getCrypto = getCrypto;
 
 //For Tests
-module.exports.readFile = rdfile;
+// module.exports.readFile = rdfile;
 module.exports.averages = getAverages;
 module.exports.exchangeJSON = getExchangeJSON;
