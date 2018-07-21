@@ -46,7 +46,15 @@ function readExchanges() {
         var i = 0;
         async.each(Exchange_keys, function() {
             var key = Exchange_keys[i];
-            exchanges.push(data[key].exchange);
+            if (data[key].exchange !== '') {
+                exchanges.push(data[key].exchange);
+            } else if (data[key].fallback !== '') {
+                exchanges.push(data[key].fallback);
+                winston.warn(`${key} - No fallback set`);
+            } else {
+                winston.error(`No exchange uri specified - exchange [null], fallback [null] - ${key}`);
+                process.exit;
+            }
             i++;
         });
         resolve();

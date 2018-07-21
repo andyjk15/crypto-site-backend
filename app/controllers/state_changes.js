@@ -28,18 +28,18 @@ var BTCincreases = {},
 
 function getCrypto(exchanges) {
     var x = 0;
+
     async.each(exchanges, function() {
         var exchange = exchanges[x];
-        if (exchange.url !== '') {
-            //console.log(exchange);
+        if (exchange !== '') {
             request.get(exchange, (err, res, body) => {
                 if (err) {
                     winston.error(`Invalid currency syntax - ${err}`);
                     process.exit();
                 }
                 var cryptdata = JSON.parse(body);
-                console.log(cryptdata);
-                switchcrypto(exchange, cryptdata); //Async BROKE add async into state_changes
+                console.log(exchange);
+                switchcrypto(exchange, cryptdata);
 
             });
         }
@@ -49,17 +49,16 @@ function getCrypto(exchanges) {
 }
 
 function switchcrypto(exchange, cryptdata) { //DO FALLBACK EXCHANGE CHECK HERE
-    exchange = exchange.url;
     switch (true) {
         case /BTCU/.test(exchange) || /btcu/.test(exchange) || /btc-/.test(exchange) || /BTC-/.test(exchange):
             var BTC = [];
             var wait = async () => {
                 var ExJSON = await getExchangeJSON(exchange, cryptdata);
                 BTC.push(ExJSON);
-                var count = await rdfile('BTCe');
-                if (BTC.length === count) {
-                    var prices = await getAverages(BTC);
-                    BTCprices.push(prices);
+                // var count = await rdfile('BTCe');
+                //if (BTC.length === count) {
+                var prices = await getAverages(BTC);
+                BTCprices.push(prices);
                 }
             };
             wait();
@@ -72,7 +71,7 @@ function switchcrypto(exchange, cryptdata) { //DO FALLBACK EXCHANGE CHECK HERE
             var wait = async () => {
                 var ExJSON = await getExchangeJSON(exchange, cryptdata);
                 BCH.push(ExJSON);
-                var count = await rdfile('BCHe');
+                // var count = await rdfile('BCHe');
                 if (BCH.length === count) {
                     var prices = await getAverages(BCH);
                     BCHprices.push(prices);
@@ -88,7 +87,7 @@ function switchcrypto(exchange, cryptdata) { //DO FALLBACK EXCHANGE CHECK HERE
             var wait = async () => {
                 var ExJSON = await getExchangeJSON(exchange, cryptdata);
                 ETH.push(ExJSON);
-                var count = await rdfile('ETHe');
+                // var count = await rdfile('ETHe');
                 if (ETH.length === count) {
                     var conversion = await convertToUSD(exchange, ETH);
                     var prices = await getAverages(conversion);
@@ -106,7 +105,7 @@ function switchcrypto(exchange, cryptdata) { //DO FALLBACK EXCHANGE CHECK HERE
             var wait = async () => {
                 var ExJSON = await getExchangeJSON(exchange, cryptdata);
                 ETN.push(ExJSON);
-                var count = await rdfile('ETNe');
+                // var count = await rdfile('ETNe');
                 if (ETN.length === count) {
                     var prices = await getAverages(ETN);
                     ETNprices.push(prices);
@@ -122,7 +121,7 @@ function switchcrypto(exchange, cryptdata) { //DO FALLBACK EXCHANGE CHECK HERE
             var wait = async () => {
                 var ExJSON = await getExchangeJSON(exchange, cryptdata);
                 DASH.push(ExJSON);
-                var count = await rdfile('DASHe');
+                // var count = await rdfile('DASHe');
                 if (DASH.length === count) {
                     var prices = await getAverages(DASH);
                     DASHprices.push(prices);
